@@ -4,64 +4,66 @@ namespace K92\PhpLib;
 
 class BashCharEscape {
 
-    public $lbs = '';     // low backslash
-    public $hbs = '\\';   // high backslash
-    public $quote = "'";  // default quote
-
-    static public function getReplacements()
+    static public function getReplacements(Array $configs)
     {
+        $default_configs = static::getDefaultConfigs();
+
+        $lbs = $configs['lbs'] ?? $default_configs['lbs'];
+        $hbs = $configs['hbs'] ?? $default_configs['hbs'];
+        $quote = $configs['quote'] ?? $default_configs['quote'];
+
         return [
 
             // single quote
-            "'" => "{$$this->lbs}{$this->quote}{$this->hbs}'{$this->lbs}{$this->quote}",
+            "'" => "$lbs$quote$hbs'$lbs$quote",
 
             // double quote
-            "\"" => "{$this->lbs}{$this->quote}{$this->hbs}\"{$this->lbs}{$this->quote}",
+            "\"" => "$lbs$quote$hbs\"$lbs$quote",
 
             // back quote
-            "`" => "{$$this->lbs}{$this->quote}{$this->hbs}`{$this->lbs}{$this->quote}",
+            "`" => "$lbs$quote$hbs`$lbs$quote",
 
             // backslash
-            "\\" => "{$this->lbs}{$this->quote}{$this->hbs}\\{$this->lbs}{$this->quote}",
+            "\\" => "$lbs$quote$hbs\\$lbs$quote",
 
             // asterisk
-            "*" => "{$$this->lbs}{$this->quote}{$this->hbs}*{$this->lbs}{$this->quote}",
+            "*" => "$lbs$quote$hbs*$lbs$quote",
 
             // left parenthesis
-            "(" => "{$$this->lbs}{$this->quote}{$this->hbs}({$this->lbs}{$this->quote}",
+            "(" => "$lbs$quote$hbs($lbs$quote",
 
             // right parenthesis
-            ")" => "{$$this->lbs}{$this->quote}{$this->hbs}){$this->lbs}{$this->quote}",
+            ")" => "$lbs$quote$hbs)$lbs$quote",
 
             // left square bracket
-            "[" => "{$this->lbs}{$this->quote}{$this->hbs}"."["."{$this->lbs}{$this->quote}",
+            "[" => "$lbs$quote$hbs"."["."$lbs$quote",
 
             // right curly bracket
-            "}" => "{$this->lbs}{$this->quote}{$this->hbs}"."}"."{$this->lbs}{$this->quote}",
+            "}" => "$lbs$quote$hbs"."}"."$lbs$quote",
 
             // less than sign
-            "<" => "{$this->lbs}{$this->quote}{$this->hbs}"."<"."{$this->lbs}{$this->quote}",
+            "<" => "$lbs$quote$hbs"."<"."$lbs$quote",
 
             // greater than sign
-            ">" => "{$this->lbs}{$this->quote}{$this->hbs}".">"."{$this->lbs}{$this->quote}",
+            ">" => "$lbs$quote$hbs".">"."$lbs$quote",
 
             // vertical line
-            "|" => "{$this->lbs}{$this->quote}{$this->hbs}|{$this->lbs}{$this->quote}",
+            "|" => "$lbs$quote$hbs|$lbs$quote",
 
             // space
-            " " => "{$this->lbs}{$this->quote}{$this->hbs} {$this->lbs}{$this->quote}",
+            " " => "$lbs$quote$hbs $lbs$quote",
 
             // semicolon
-            ";" => "{$this->lbs}{$this->quote}{$this->hbs};{$this->lbs}{$this->quote}",
+            ";" => "$lbs$quote$hbs;$lbs$quote",
 
             // question mark
-            "?" => "{$this->lbs}{$this->quote}{$this->hbs}"."?"."{$this->lbs}{$this->quote}",
+            "?" => "$lbs$quote$hbs"."?"."$lbs$quote",
 
             // ampersand (and)
-            "&" => "{$this->lbs}{$this->quote}{$this->hbs}&{$this->lbs}{$this->quote}",
+            "&" => "$lbs$quote$hbs&$lbs$quote",
 
             // minus
-            "-" => "{$this->lbs}{$this->quote}{$this->hbs}-{$this->lbs}{$this->quote}",
+            "-" => "$lbs$quote$hbs-$lbs$quote",
         ];
     }
 
@@ -74,5 +76,14 @@ class BashCharEscape {
             array_values($kv_replacements),
             $str
         );
+    }
+
+    static protected function getDefaultConfigs()
+    {
+        return [
+            'lbs' => '',   // low back slash
+            'hbs' => '\\', // high back slash
+            "'" => "'",    // quote
+        ];
     }
 }
