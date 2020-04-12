@@ -83,7 +83,7 @@ class BashCharEscape {
         return [
             'lbs' => '',   // low back slash
             'hbs' => '\\', // high back slash
-            "'" => "'",    // quote
+            "quote" => "'",    // quote
         ];
     }
 }
