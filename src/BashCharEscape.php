@@ -65,7 +65,7 @@ class BashCharEscape {
         ];
     }
 
-    public function escape(String $str, String $lbs, String $hbs, $quote = "'")
+    static public function escape(String $str, String $lbs, String $hbs, $quote = "'")
     {
         $kv_replacements = BashCharEscape::getReplacements();
 
