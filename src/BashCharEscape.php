@@ -4,13 +4,28 @@ namespace K92\PhpLib;
 
 class BashCharEscape {
 
-    static public function getReplacements(Array $configs = [])
+    static public function escape(String $str, String $lbs, String $hbs, $quote = "'")
     {
-        $default_configs = static::getDefaultConfigs();
+        $kv_replacements = BashCharEscape::getReplacements([
+            'lbs' => $lbs,
+            'hbs' => $hbs,
+            'quote' => $quote
+        ]);
 
-        $lbs = $configs['lbs'] ?? $default_configs['lbs'];
-        $hbs = $configs['hbs'] ?? $default_configs['hbs'];
-        $quote = $configs['quote'] ?? $default_configs['quote'];
+        $replaced_str = StrUtil::replaceOnce(
+            array_keys($kv_replacements),
+            array_values($kv_replacements),
+            $str
+        );
+
+        return $replaced_str;
+    }
+
+    static protected function getReplacements(Array $configs)
+    {
+        $lbs = $configs['lbs'];
+        $hbs = $configs['hbs'];
+        $quote = $configs['quote'];
 
         return [
 
@@ -64,26 +79,6 @@ class BashCharEscape {
 
             // minus
             "-" => "$lbs$quote$hbs-$lbs$quote",
-        ];
-    }
-
-    static public function escape(String $str, String $lbs, String $hbs, $quote = "'")
-    {
-        $kv_replacements = BashCharEscape::getReplacements();
-
-        $replaced_str = StrUtil::replaceOnce(
-            array_keys($kv_replacements),
-            array_values($kv_replacements),
-            $str
-        );
-    }
-
-    static protected function getDefaultConfigs()
-    {
-        return [
-            'lbs' => '',   // low back slash
-            'hbs' => '\\', // high back slash
-            "quote" => "'",    // quote
         ];
     }
 }
