@@ -4,7 +4,7 @@ namespace K92\PhpLib;
 
 class BashCharEscape {
 
-    static public function getReplacements(Array $configs)
+    static public function getReplacements(Array $configs = [])
     {
         $default_configs = static::getDefaultConfigs();
 
