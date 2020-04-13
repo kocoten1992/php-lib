@@ -79,6 +79,9 @@ class BashCharEscape {
 
             // minus
             "-" => "$lbs$quote$hbs-$lbs$quote",
+
+            // dollar sign
+            "$" => "$lbs$quote$hbs$$lbs$quote",
         ];
     }
 }
