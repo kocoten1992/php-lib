@@ -4,12 +4,13 @@ namespace K92\PhpLib;
 
 class BashCharEscape {
 
-    static public function escape(String $str, String $lbs, String $hbs, $quote = "'")
+    static public function escape(String $str, String $lbs, String $hbs, $quote = "'", $over_ride = [])
     {
         $kv_replacements = BashCharEscape::getReplacements([
             'lbs' => $lbs,
             'hbs' => $hbs,
-            'quote' => $quote
+            'quote' => $quote,
+            'over_ride' => $over_ride
         ]);
 
         $replaced_str = StrUtil::replaceOnce(
@@ -26,8 +27,9 @@ class BashCharEscape {
         $lbs = $configs['lbs'];
         $hbs = $configs['hbs'];
         $quote = $configs['quote'];
+        $over_ride = $configs['over_ride'];
 
-        return [
+        return $over_ride + [
 
             // single quote
             "'" => "$lbs$quote$hbs'$lbs$quote",

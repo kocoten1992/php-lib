@@ -13,5 +13,11 @@ class BashCharEscapeTest extends TestCase
         $this->assertEquals('{', BashCharEscape::escape('{', '\\', '\\\\\\', "'"));
 
         $this->assertEquals('\\\'\\\\\\"\\\'', BashCharEscape::escape('"', '\\', '\\\\\\', "'"));
+
+        // override
+        $this->assertEquals(
+            'abc',
+            BashCharEscape::escape('"', '\\', '\\\\\\', "'", ['"' => 'abc'])
+        );
     }
 }
